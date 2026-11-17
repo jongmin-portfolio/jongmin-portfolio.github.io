@@ -35,7 +35,7 @@ button { font: inherit; color: inherit; }
 .top.is-scrolled { border-bottom-color: var(--line); }
 .top__in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.03em; }
-.top nav { display: flex; gap: 28px; font-size: 14px; font-weight: 500; }
+.top nav { margin-left: auto; display: flex; gap: 28px; font-size: 14px; font-weight: 500; }
 .top nav a { color: var(--sub); transition: color 0.2s; }
 .top nav a:hover { color: var(--ink); }
 

@@ -435,3 +435,9 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .stills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .still figcaption { flex-direction: column; gap: 2px; font-size: 12px; }
 @media (max-width: 760px) { .stills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* 크게 보기: 폴더 화면과 같은 정사각형 틀에 정해 둔 확대·위치로 */
+.lb__frame { display: block; width: min(calc(100vw - 160px), calc(100vh - 140px)); aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: #1b1a18; }
+.lb__frame[hidden] { display: none; }
+.lb__frame .lb__img { display: block; width: 100%; height: 100%; max-width: none; max-height: none; border-radius: 0; object-fit: cover; }
+@media (max-width: 760px) { .lb__frame { width: min(calc(100vw - 24px), calc(100vh - 180px)); } }

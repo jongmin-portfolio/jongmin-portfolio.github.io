@@ -311,6 +311,11 @@ const lbVideo = lb.querySelector(".lb__video");
 const lbCap = lb.querySelector(".lb__cap");
 const lbPrev = lb.querySelector(".lb__prev");
 const lbNext = lb.querySelector(".lb__next");
+// 크게 보기에서도 폴더 화면과 같은 정사각형 틀 + 정해 둔 확대·위치(crops.js) 적용
+const lbFrame = document.createElement("span");
+lbFrame.className = "lb__frame";
+lbImg.replaceWith(lbFrame);
+lbFrame.append(lbImg);
 let lbIndex = 0;
 const lbFigures = () => [...modalBody.querySelectorAll(".gallery-modal__grid figure:not(.is-deleted)")];
 
@@ -321,6 +326,7 @@ function showLightbox(i) {
   const img = fig.querySelector("img");
   const video = img.dataset.video;
   lbImg.hidden = !!video;
+  lbFrame.hidden = !!video;
   lbVideo.hidden = !video;
   lbVideo.pause();
   if (video) {
@@ -332,6 +338,12 @@ function showLightbox(i) {
     lbVideo.load();
     lbImg.src = img.src;
     lbImg.alt = img.alt;
+    const c = cropFor(cropKey(img));
+    const pos = c ? `${c.x}% ${c.y}%` : "";
+    lbImg.style.objectPosition = pos;
+    lbImg.style.transformOrigin = pos;
+    lbImg.style.scale = c && c.s !== 1 ? String(c.s) : "";
+    lbFrame.style.backgroundColor = c?.b || "";
   }
   lbCap.textContent = `${fig.querySelector("figcaption")?.textContent ?? ""} · ${lbIndex + 1} / ${figs.length}`;
   lbPrev.hidden = lbNext.hidden = figs.length < 2;

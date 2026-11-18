@@ -600,19 +600,19 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 .colortile__name { max-width: 100%; overflow-wrap: anywhere; line-height: 1.15; }
 @media (max-width: 520px) { .colortile__name { font-size: 13px; letter-spacing: .04em; } .colortile__hex { font-size: 9px; } }
 
-/* ===== 로고 시스템: 연한 바탕 + 연한 워드마크 + 점선 구성 가이드 ===== */
+/* ===== 로고 시스템: 브랜드 색 바탕 + 브랜드 색 로고 + 얇은 흰 기준선 4개 + 하단 태그라인 ===== */
 .logosys { grid-column: 1 / -1; margin-top: 56px; }
-.logosys__stage { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 2 / 1; border-radius: 16px; overflow: hidden; background: #f1f6f9; }
-.logosys__word { position: relative; z-index: 1; font-family: "Montserrat", "Pretendard", sans-serif; font-weight: 600; font-size: clamp(44px, 11vw, 176px); line-height: 1; letter-spacing: .01em; color: #dde5ec; white-space: nowrap; text-transform: uppercase; }
-.logosys__word.is-lower { text-transform: none; }
-.logosys__word .ch { display: inline-block; }
-.logosys__word .bl { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
+.logosys > .brandkit__label, .logosys > .brandkit__note { display: none; }
+.logosys__stage { --ls-bg: #c9d9bd; --ls-ink: #b8907c; position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 3 / 2; overflow: hidden; background: var(--ls-bg); transition: background .4s; }
+.logosys__title { position: absolute; top: 7%; left: 0; right: 0; margin: 0; text-align: center; font-family: "Montserrat", sans-serif; font-weight: 400; font-size: clamp(11px, 1.3vw, 16px); letter-spacing: -.01em; color: #fff; z-index: 3; }
+.logosys__word { position: relative; z-index: 1; font-family: "Montserrat", "Pretendard", sans-serif; font-weight: 500; line-height: 1; letter-spacing: .16em; margin-right: -.16em; color: var(--ls-ink); white-space: nowrap; text-transform: uppercase; }
+.logosys__word.is-lower { text-transform: none; letter-spacing: .04em; margin-right: -.04em; }
+.logosys__img { position: relative; z-index: 1; display: block; max-width: 46%; max-height: 22%; width: auto; height: auto; opacity: 0; }
+.logosys__tint { position: absolute; z-index: 1; background: var(--ls-ink); -webkit-mask: var(--logo) center / 100% 100% no-repeat; mask: var(--logo) center / 100% 100% no-repeat; pointer-events: none; }
 .logosys__guides { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-.logosys__guides .g { stroke: rgba(70, 80, 92, .38); stroke-width: 1; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
-.logosys__guides .g.v { stroke: rgba(70, 80, 92, .28); }
-.logosys__guides .c { fill: none; stroke: #6e7f90; stroke-width: 1; vector-effect: non-scaling-stroke; }
-.logosys__guides .lb { font-family: "Jost", sans-serif; font-size: 10px; letter-spacing: .14em; fill: rgba(70, 80, 92, .55); text-anchor: end; }
-@media (max-width: 760px) { .logosys { margin-top: 40px; } .logosys__stage { aspect-ratio: 4 / 3; } .logosys__word { font-size: clamp(26px, 9vw, 56px); } .logosys__guides .lb { display: none; } }
-/* 실제 로고 파일이 있는 브랜드: 연한 단색으로 표시 */
-.logosys__img { position: relative; z-index: 1; display: block; max-width: 64%; max-height: 46%; width: auto; height: auto; opacity: .16; }
-@media (max-width: 760px) { .logosys__img { max-width: 76%; max-height: 50%; } }
+.logosys__guides line { stroke: rgba(255, 255, 255, .9); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.logosys__tag { position: absolute; bottom: 7%; left: 0; right: 0; margin: 0 auto; width: max-content; max-width: 70%; padding: 0 1.8em; text-align: center; font-family: "Montserrat", sans-serif; font-weight: 500; font-size: clamp(10px, 1.45vw, 18px); line-height: 1.75; letter-spacing: .2em; text-transform: uppercase; color: #fff; z-index: 3; }
+.logosys__tag::before, .logosys__tag::after { content: ""; position: absolute; top: 50%; width: .5em; height: 2.2em; transform: translateY(-50%); border: 1.5px solid #fff; border-radius: 50%; }
+.logosys__tag::before { left: 0; border-right-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
+.logosys__tag::after { right: 0; border-left-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
+@media (max-width: 760px) { .logosys { margin-top: 40px; } .logosys__stage { aspect-ratio: 4 / 5; } .logosys__img { max-width: 64%; max-height: 18%; } .logosys__tag { max-width: 84%; font-size: 10px; } }

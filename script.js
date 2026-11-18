@@ -886,126 +886,95 @@ fitStoryMarks();
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitStoryMarks);
 window.addEventListener("resize", fitStoryMarks);
 
-// ===== 로고 시스템: 브랜드 이름 위에 구성 가이드(기준선 · 글자 간격 · 원) 그리기 =====
+// ===== 로고 시스템: 브랜드 색을 골라 바탕/로고에 칠하고, 로고 둘레에 얇은 흰 기준선 4개 그리기 =====
+function lsHex(h) { const n = parseInt(h.replace("#", ""), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function lsLum([r, g, b]) { return (0.299 * r + 0.587 * g + 0.114 * b) / 255; }
+function lsSat([r, g, b]) { const mx = Math.max(r, g, b), mn = Math.min(r, g, b); return mx ? (mx - mn) / mx : 0; }
+function lsColors(kit) {
+  const cols = [...kit.querySelectorAll(".swatch")].map((s) => getComputedStyle(s).getPropertyValue("--c").trim()).filter((c) => /^#[0-9a-f]{6}$/i.test(c));
+  if (!cols.length) return null;
+  const info = cols.map((h) => { const rgb = lsHex(h); return { h, rgb, l: lsLum(rgb), s: lsSat(rgb) }; });
+  // 바탕: 밝은 쪽(0.62~0.92) 중 색감이 가장 있는 색을 골라, 참고 이미지처럼 연한 파스텔(밝기 약 0.8)로 맞춤
+  let pool = info.filter((c) => c.l > 0.62 && c.l < 0.92 && c.s > 0.06);
+  if (!pool.length) pool = info.filter((c) => c.s > 0.06);
+  if (!pool.length) pool = info;
+  const base = [...pool].sort((p, q) => q.s - p.s)[0];
+  const mix = (rgb, k) => rgb.map((v) => Math.round(v + (255 - v) * k));
+  let rgb = base.rgb, k = 0;
+  while (lsLum(rgb) < 0.8 && k < 0.9) { k += 0.05; rgb = mix(base.rgb, k); }
+  const bg = { h: "#" + rgb.map((v) => v.toString(16).padStart(2, "0")).join(""), rgb, l: lsLum(rgb) };
+  // 로고: 바탕보다 충분히 어두운 색 중 (색감 + 대비)가 가장 큰 것
+  const inks = info.filter((c) => bg.l - c.l > 0.25);
+  const ink = (inks.length ? inks : info).sort((p, q) => (q.s * 0.6 + (bg.l - q.l)) - (p.s * 0.6 + (bg.l - p.l)))[0] || { h: "#333333" };
+  // 브랜드 대표색(--brand)이 있으면 로고 색으로 우선 사용
+  const brand = (kit.closest(".chapter")?.style.getPropertyValue("--brand") || "").trim();
+  if (/^#[0-9a-f]{6}$/i.test(brand) && bg.l - lsLum(lsHex(brand)) > 0.2) return { bg: bg.h, ink: brand };
+  return { bg: bg.h, ink: ink.h };
+}
 function drawLogoGuides() {
-  document.querySelectorAll(".chapter.is-open .logosys__stage").forEach((stage) => {
-    const word = stage.querySelector(".logosys__word");
-    const svg = stage.querySelector(".logosys__guides");
-    if (!word || !svg) return;
-    // 글자마다 감싸서 위치 재기 (한 번만)
-    if (!word.dataset.split) {
-      const t = word.textContent;
-      word.textContent = "";
-      [...t].forEach((c) => { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; word.append(s); });
-      const bl = document.createElement("span"); bl.className = "bl"; word.append(bl);
-      word.dataset.split = "1";
+  document.querySelectorAll(".logosys").forEach((box) => {
+    const stage = box.querySelector(".logosys__stage");
+    const kit = box.closest(".brandkit");
+    if (!stage.dataset.colored && kit) {
+      const c = lsColors(kit);
+      if (c) { stage.style.setProperty("--ls-bg", c.bg); stage.style.setProperty("--ls-ink", c.ink); }
+      stage.dataset.colored = "1";
     }
     const W = stage.clientWidth, H = stage.clientHeight;
-    if (!W) return;
-    // 이름이 길어도 바탕 안에 들어가도록 글자 크기 맞추기
-    word.style.fontSize = "100px";
-    const nat = word.offsetWidth || 1;
-    word.style.fontSize = Math.min(W < 700 ? 72 : 176, (W * 0.74 * 100) / nat) + "px";
-    const cs = getComputedStyle(word);
-    const ctx = (drawLogoGuides.c ||= document.createElement("canvas").getContext("2d"));
-    ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-    const base = word.offsetTop + word.querySelector(".bl").offsetTop;
-    const cap = ctx.measureText("H").actualBoundingBoxAscent;
-    const xh = ctx.measureText("x").actualBoundingBoxAscent;
-    const desc = ctx.measureText("p").actualBoundingBoxDescent;
-    const asc = ctx.measureText("d").actualBoundingBoxAscent;
-    const lines = [];
-    const h = (y, label) => lines.push(`<line x1="0" x2="${W}" y1="${y}" y2="${y}" class="g"/>` + (label ? `<text x="${W - 12}" y="${y - 6}" class="lb">${label}</text>` : ""));
-    h(base - Math.max(cap, asc), "ASCENDER");
-    if (Math.abs(asc - cap) > 10) h(base - cap, "CAP HEIGHT");
-    h(base - xh, "X-HEIGHT");
-    h(base, "BASELINE");
-    h(base + desc, "DESCENDER");
-    // 글자 경계 세로선 + 둥근 글자 위 원
-    const xs = [];
-    const round = /[oOeEcCGQ0]/;
-    word.querySelectorAll(".ch").forEach((ch) => {
-      if (!ch.textContent.trim()) return;
-      const l = word.offsetLeft + ch.offsetLeft, rr = l + ch.offsetWidth;
-      [l, rr].forEach((x) => { if (!xs.some((v) => Math.abs(v - x) < 3)) xs.push(x); });
-      if (round.test(ch.textContent)) {
-        const isUp = ch.textContent === ch.textContent.toUpperCase() && /[A-Z0]/.test(ch.textContent);
-        const d = isUp ? cap : xh;
-        const cx = (l + rr) / 2, cy = base - d / 2, rad = Math.min(d, rr - l) / 2;
-        lines.push(`<circle cx="${cx}" cy="${cy}" r="${rad}" class="c"/>`);
-      }
-    });
-    xs.forEach((x) => lines.push(`<line x1="${x}" x2="${x}" y1="0" y2="${H}" class="g v"/>`));
-    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    svg.innerHTML = lines.join("");
-  });
-}
-addEventListener("resize", () => requestAnimationFrame(drawLogoGuides));
-document.addEventListener("transitionend", () => requestAnimationFrame(drawLogoGuides));
-addEventListener("hashchange", () => setTimeout(drawLogoGuides, 60));
-(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(drawLogoGuides, 60));
-
-// ===== 로고 시스템(실제 로고 이미지): 글자 모양을 읽어서 가이드 그리기 =====
-function drawImageLogoGuides() {
-  document.querySelectorAll(".chapter.is-open .logosys__stage").forEach((stage) => {
+    if (!W || !stage.closest(".chapter.is-open")) return;
+    const svg = stage.querySelector(".logosys__guides");
+    let l, r, t, b;
     const img = stage.querySelector(".logosys__img");
-    const svg = stage.querySelector(".logosys__guides");
-    if (!img || !svg || !img.complete || !img.naturalWidth) return;
-    const W = stage.clientWidth, H = stage.clientHeight;
-    const dw = img.offsetWidth, dh = img.offsetHeight, ox = img.offsetLeft, oy = img.offsetTop;
-    if (!W || !dw) return;
-    // 이미지의 잉크(글자) 영역 분석 — 한 번만
-    if (!img._ink) {
-      const cw = 600, ch = Math.round((img.naturalHeight / img.naturalWidth) * cw);
-      const c = document.createElement("canvas"); c.width = cw; c.height = ch;
-      const g = c.getContext("2d"); g.drawImage(img, 0, 0, cw, ch);
-      const a = g.getImageData(0, 0, cw, ch).data;
-      const on = (x, y) => a[(y * cw + x) * 4 + 3] > 90;
-      const col = []; for (let x = 0; x < cw; x++) { let t = -1, b = -1; for (let y = 0; y < ch; y++) if (on(x, y)) { if (t < 0) t = y; b = y; } col.push([t, b]); }
-      const segs = []; let cur = null, gap = 0;
-      for (let x = 0; x < cw; x++) {
-        const [t, b] = col[x];
-        if (t >= 0) { if (!cur) cur = { l: x, r: x, t, b }; else { cur.r = x; cur.t = Math.min(cur.t, t); cur.b = Math.max(cur.b, b); } gap = 0; }
-        else if (cur && ++gap > 2) { segs.push(cur); cur = null; }
+    const word = stage.querySelector(".logosys__word");
+    if (img) {
+      if (!img.complete || !img.naturalWidth) return;
+      let tint = stage.querySelector(".logosys__tint");
+      if (!tint) { tint = document.createElement("span"); tint.className = "logosys__tint"; tint.style.setProperty("--logo", `url("${img.currentSrc || img.src}")`); stage.append(tint); }
+      l = img.offsetLeft; t = img.offsetTop; r = l + img.offsetWidth; b = t + img.offsetHeight;
+      // 악센트(É 등)처럼 일부만 튀어나온 부분은 빼고 글자 윗선/바닥선을 잡음
+      if (!img._rows) {
+        const cw = 400, ch = Math.max(1, Math.round((img.naturalHeight / img.naturalWidth) * cw));
+        const c = document.createElement("canvas"); c.width = cw; c.height = ch;
+        const g = c.getContext("2d"); g.drawImage(img, 0, 0, cw, ch);
+        const a = g.getImageData(0, 0, cw, ch).data, tops = [], bots = [];
+        for (let x = 0; x < cw; x++) { let tt = -1, bb = -1; for (let y = 0; y < ch; y++) if (a[(y * cw + x) * 4 + 3] > 90) { if (tt < 0) tt = y; bb = y; } if (tt >= 0) { tops.push(tt); bots.push(bb); } }
+        const pct = (arr, p) => { const v = [...arr].sort((m, n) => m - n); return v[Math.floor((v.length - 1) * p)] || 0; };
+        const tq = pct(tops, 0.25) / ch, bq = (pct(bots, 0.75) + 1) / ch;
+        img._rows = { t: tq < 0.25 ? tq : 0, b: bq > 0.75 ? bq : 1 };
       }
-      if (cur) segs.push(cur);
-      segs.forEach((s) => {
-        const cx = Math.round((s.l + s.r) / 2), cy = Math.round((s.t + s.b) / 2);
-        const ix = Math.max(1, Math.round((s.r - s.l) * 0.08)), iy = Math.max(1, Math.round((s.b - s.t) * 0.08));
-        s.hollow = !on(cx, cy);
-        // 둥근 모양: 네 모서리가 비어 있음 (R, 한글 등은 모서리에 획이 있음)
-        s.round = !on(s.l + ix, s.t + iy) && !on(s.r - ix, s.t + iy) && !on(s.l + ix, s.b - iy) && !on(s.r - ix, s.b - iy);
-      });
-      img._ink = { cw, ch, segs };
-    }
-    const { cw, ch, segs } = img._ink;
-    const sx = dw / cw, sy = dh / ch;
-    const med = (arr) => { const v = [...arr].sort((p, q) => p - q); return v[Math.floor(v.length / 2)]; };
-    const tops = segs.map((s) => s.t), bots = segs.map((s) => s.b);
-    const top = Math.min(...tops), cap = med(tops), base = med(bots), bot = Math.max(...bots);
-    const Y = (v) => oy + v * sy, X = (v) => ox + v * sx;
-    const out = [];
-    const h = (y, label) => out.push(`<line x1="0" x2="${W}" y1="${y}" y2="${y}" class="g"/>` + (label ? `<text x="${W - 12}" y="${y - 6}" class="lb">${label}</text>` : ""));
-    if (cap - top > ch * 0.06) h(Y(top), "ASCENDER");
-    h(Y(cap), "CAP HEIGHT");
-    h(Y((cap + base) / 2), "MIDLINE");
-    h(Y(base + 1), "BASELINE");
-    if (bot - base > ch * 0.06) h(Y(bot + 1), "DESCENDER");
-    const xs = [];
-    segs.forEach((s) => {
-      [X(s.l), X(s.r + 1)].forEach((x) => { if (!xs.some((v) => Math.abs(v - x) < 4)) xs.push(x); });
-      const w = s.r - s.l, hh = s.b - s.t, ratio = w / Math.max(1, hh);
-      if (ratio > 0.8 && ratio < 1.25 && hh > (base - cap) * 0.6 && s.round && (s.hollow || hh > ch * 0.8)) {
-        out.push(`<circle cx="${X((s.l + s.r + 1) / 2)}" cy="${Y((s.t + s.b + 1) / 2)}" r="${(Math.max(w * sx, hh * sy)) / 2 + 1}" class="c"/>`);
-      }
-    });
-    xs.forEach((x) => out.push(`<line x1="${x}" x2="${x}" y1="0" y2="${H}" class="g v"/>`));
+      const ih = b - t; b = t + ih * img._rows.b; t = t + ih * img._rows.t;
+      Object.assign(tint.style, { left: l + "px", top: t + "px", width: r - l + "px", height: b - t + "px" });
+    } else if (word) {
+      // 이름 길이에 맞춰 글자 크기 (바탕 너비의 약 46%)
+      word.style.fontSize = "100px";
+      const nat = word.offsetWidth || 1;
+      word.style.fontSize = Math.min(W < 700 ? 60 : 120, (W * (W < 700 ? 0.66 : 0.46) * 100) / nat) + "px";
+      const cs = getComputedStyle(word);
+      const ctx = (drawLogoGuides.c ||= document.createElement("canvas").getContext("2d"));
+      ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const txt = cs.textTransform === "uppercase" ? word.textContent.toUpperCase() : word.textContent;
+      const m = ctx.measureText(txt);
+      const fs = parseFloat(cs.fontSize);
+      // 글자 실제 잉크 위/아래: 대문자 높이 ~ 바닥선 (아래 꼬리가 있으면 포함)
+      const asc = Math.max(ctx.measureText("H").actualBoundingBoxAscent, m.actualBoundingBoxAscent);
+      const desc = Math.max(0, m.actualBoundingBoxDescent);
+      const boxTop = word.offsetTop, boxH = word.offsetHeight;
+      const base = boxTop + (boxH + (m.fontBoundingBoxAscent - m.fontBoundingBoxDescent)) / 2;
+      t = base - asc; b = base + (desc > fs * 0.05 ? desc : 0);
+      l = word.offsetLeft; r = l + word.offsetWidth - parseFloat(cs.marginRight || 0) * 0 - (parseFloat(cs.letterSpacing) || 0);
+    } else return;
+    const ex = Math.max(28, W * 0.03), ey = Math.max(28, (b - t) * 0.4);
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    svg.innerHTML = out.join("");
+    svg.innerHTML =
+      `<line x1="${l - ex}" x2="${r + ex}" y1="${t}" y2="${t}"/>` +
+      `<line x1="${l - ex}" x2="${r + ex}" y1="${b}" y2="${b}"/>` +
+      `<line x1="${l}" x2="${l}" y1="${t - ey}" y2="${b + ey}"/>` +
+      `<line x1="${r}" x2="${r}" y1="${t - ey}" y2="${b + ey}"/>`;
   });
 }
-document.querySelectorAll(".logosys__img").forEach((img) => img.addEventListener("load", () => requestAnimationFrame(drawImageLogoGuides)));
-addEventListener("resize", () => requestAnimationFrame(drawImageLogoGuides));
-addEventListener("hashchange", () => setTimeout(drawImageLogoGuides, 60));
-document.addEventListener("transitionend", () => requestAnimationFrame(drawImageLogoGuides));
-addEventListener("load", () => setTimeout(drawImageLogoGuides, 60));
+document.querySelectorAll(".logosys__img").forEach((img) => img.addEventListener("load", () => requestAnimationFrame(drawLogoGuides)));
+addEventListener("resize", () => requestAnimationFrame(drawLogoGuides));
+addEventListener("hashchange", () => setTimeout(drawLogoGuides, 60));
+document.addEventListener("transitionend", () => requestAnimationFrame(drawLogoGuides));
+addEventListener("load", () => setTimeout(drawLogoGuides, 60));
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(drawLogoGuides, 60));

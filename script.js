@@ -852,7 +852,8 @@ function fitStoryMarks() {
     if (!span) return;
     el.style.fontSize = "100px";
     const w = span.getBoundingClientRect().width;
-    if (w) el.style.fontSize = `${(100 * el.clientWidth) / w}px`;
+    // 칸 너비의 약 70%만 차지하도록 (너무 꽉 차지 않게)
+    if (w) el.style.fontSize = `${(100 * el.clientWidth * 0.7) / w}px`;
   });
 }
 fitStoryMarks();

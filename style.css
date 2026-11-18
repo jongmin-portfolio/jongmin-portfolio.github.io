@@ -446,3 +446,8 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .hero__desc { max-width: 520px; line-height: 1.8; }
 .hero__desc strong { display: block; margin-bottom: 6px; color: var(--ink); font-weight: 600; }
 .hero__tags { margin: 18px 0 0; font-family: "Jost", sans-serif; font-size: 12px; letter-spacing: 0.16em; color: var(--sub); }
+
+/* 작은 숫자(제품 순번·브랜드 목록 번호)는 영문 글꼴 Jost로 */
+.group--grid .tile__text::before { font-family: "Jost", sans-serif; font-variation-settings: normal; font-size: 18px; font-weight: 400; line-height: 1.2; letter-spacing: 0.02em; }
+.brand__no { font-family: "Jost", sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0.04em; }
+@media (max-width: 760px) { .group--grid .tile__text::before { font-size: 16px; } }

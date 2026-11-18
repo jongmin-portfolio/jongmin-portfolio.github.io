@@ -607,7 +607,7 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 .logosys__title { position: absolute; top: 7%; left: 0; right: 0; margin: 0; text-align: center; font-family: "Montserrat", sans-serif; font-weight: 400; font-size: clamp(11px, 1.3vw, 16px); letter-spacing: -.01em; color: #fff; z-index: 3; }
 .logosys__word { position: relative; z-index: 1; font-family: "Montserrat", "Pretendard", sans-serif; font-weight: 500; line-height: 1; letter-spacing: .16em; margin-right: -.16em; color: var(--ls-ink); white-space: nowrap; text-transform: uppercase; }
 .logosys__word.is-lower { text-transform: none; letter-spacing: .04em; margin-right: -.04em; }
-.logosys__img { position: relative; z-index: 1; display: block; max-width: 46%; max-height: 22%; width: auto; height: auto; opacity: 0; }
+.logosys__img { position: relative; z-index: 1; display: block; flex: none; width: auto; height: auto; max-width: 46%; max-height: 22%; object-fit: contain; }
 .logosys__tint { position: absolute; z-index: 1; background: var(--ls-ink); -webkit-mask: var(--logo) center / 100% 100% no-repeat; mask: var(--logo) center / 100% 100% no-repeat; pointer-events: none; }
 .logosys__guides { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
 .logosys__guides line { stroke: rgba(255, 255, 255, .9); stroke-width: 1; vector-effect: non-scaling-stroke; }
@@ -615,4 +615,12 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 .logosys__tag::before, .logosys__tag::after { content: ""; position: absolute; top: 50%; width: .5em; height: 2.2em; transform: translateY(-50%); border: 1.5px solid #fff; border-radius: 50%; }
 .logosys__tag::before { left: 0; border-right-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
 .logosys__tag::after { right: 0; border-left-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
-@media (max-width: 760px) { .logosys { margin-top: 40px; } .logosys__stage { aspect-ratio: 4 / 5; } .logosys__img { max-width: 64%; max-height: 18%; } .logosys__tag { max-width: 84%; font-size: 10px; } }
+@media (max-width: 760px) { .logosys { margin-top: 40px; } .logosys__stage { aspect-ratio: 4 / 5; } .logosys__img { max-width: 64%; max-height: 16%; } .logosys__tag { max-width: 84%; font-size: 10px; } }
+/* 미색(웜 아이보리) 바탕 — 모든 브랜드 공통. 흰 선/글자는 잘 안 보여서 따뜻한 회갈색으로 */
+.logosys__stage { --ls-bg: #E5DAC6 !important; }
+.logosys__title, .logosys__tag { color: #8f8270; }
+.logosys__tag::before, .logosys__tag::after { border-color: #8f8270; }
+.logosys__tag::before { border-right-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
+.logosys__tag::after { border-left-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
+.logosys__guides line { stroke: rgba(143, 130, 112, .85); }
+.logosys__tint { display: none; }

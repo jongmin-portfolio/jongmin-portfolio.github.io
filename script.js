@@ -928,8 +928,6 @@ function drawLogoGuides() {
     const word = stage.querySelector(".logosys__word");
     if (img) {
       if (!img.complete || !img.naturalWidth) return;
-      let tint = stage.querySelector(".logosys__tint");
-      if (!tint) { tint = document.createElement("span"); tint.className = "logosys__tint"; tint.style.setProperty("--logo", `url("${img.currentSrc || img.src}")`); stage.append(tint); }
       l = img.offsetLeft; t = img.offsetTop; r = l + img.offsetWidth; b = t + img.offsetHeight;
       // 악센트(É 등)처럼 일부만 튀어나온 부분은 빼고 글자 윗선/바닥선을 잡음
       if (!img._rows) {
@@ -943,7 +941,6 @@ function drawLogoGuides() {
         img._rows = { t: tq < 0.25 ? tq : 0, b: bq > 0.75 ? bq : 1 };
       }
       const ih = b - t; b = t + ih * img._rows.b; t = t + ih * img._rows.t;
-      Object.assign(tint.style, { left: l + "px", top: t + "px", width: r - l + "px", height: b - t + "px" });
     } else if (word) {
       // 이름 길이에 맞춰 글자 크기 (바탕 너비의 약 46%)
       word.style.fontSize = "100px";

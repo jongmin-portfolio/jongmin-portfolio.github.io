@@ -662,3 +662,9 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
 /* 컬러 타일 브랜드명: COLOR SYSTEM 라벨과 같은 Jost 글꼴 (넓은 자간) */
 .colortile__name, .colortile__name.is-lower { font-family: "Jost", sans-serif; font-weight: 400; letter-spacing: .2em; margin-right: -.2em; }
 @media (max-width: 520px) { .colortile__name, .colortile__name.is-lower { letter-spacing: .12em; margin-right: -.12em; } }
+/* 컬러 타일: 로고 파일이 있는 브랜드는 실제 로고. 어두운 타일에서는 흰색으로 */
+.colortile__logo { display: block; width: auto; height: clamp(18px, 2.4vw, 34px); max-width: 66%; object-fit: contain; }
+.colortile__logo--ydy { height: clamp(26px, 3.6vw, 52px); }
+.colortile__logo--myeongdong { height: clamp(14px, 1.7vw, 24px); }
+.colortile.is-dark .colortile__logo { filter: brightness(0) invert(1); opacity: .92; }
+@media (max-width: 520px) { .colortile__logo { height: 16px; max-width: 76%; } .colortile__logo--ydy { height: 24px; } .colortile__logo--myeongdong { height: 12px; } }

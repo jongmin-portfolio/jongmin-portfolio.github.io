@@ -463,3 +463,6 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .rail:not(:has(> .tile:nth-of-type(2))) .tile__text { display: block; }
 .rail:not(:has(> .tile:nth-of-type(2))) .tile__text::before { content: none; }
 @media (max-width: 760px) { .rail:has(> .tile:nth-of-type(2)) .tile__text::before { font-size: 16px; } }
+
+/* 메인 숫자(16 · 54 · 300+)도 영문 글꼴 Jost로 */
+.hero__stats b { font-family: "Jost", sans-serif; font-variation-settings: normal; font-weight: 300; letter-spacing: -0.01em; }

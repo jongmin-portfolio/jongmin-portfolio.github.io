@@ -478,3 +478,31 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 
 /* 브랜드 이름과 아래 설명 사이 회색 가는 선 */
 .chapter__cap { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(23, 22, 20, 0.16); }
+
+/* ===== 브랜드 스토리 첫 장: 크림 바탕 + 아래 꽉 찬 브랜드 이름 + 오른쪽 작은 소개 ===== */
+.story {
+  position: relative; display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: clamp(380px, 50vw, 660px); margin-bottom: 14px;
+  padding: clamp(24px, 4vw, 56px) clamp(20px, 2.6vw, 40px) clamp(16px, 2.2vw, 30px);
+  background: #fbfaf3; border-radius: 22px; overflow: hidden;
+}
+.story__text {
+  position: absolute; left: 60%; top: 50%; width: 30%; margin: 0;
+  font-family: "Montserrat", "Jost", "Pretendard", sans-serif; font-weight: 400;
+  font-size: clamp(12px, 1.05vw, 15px); line-height: 1.9; letter-spacing: 0.03em; color: #7d7a6c;
+}
+.story__mark {
+  margin: 0; font-family: "Montserrat", "Pretendard", sans-serif; font-weight: 600;
+  line-height: 0.8; letter-spacing: 0.01em; color: #b8b49a; white-space: nowrap; text-transform: uppercase;
+}
+.story__mark.is-lower { text-transform: none; }
+.story__mark span { display: inline-block; }
+@media (max-width: 760px) {
+  .story { min-height: 0; padding-top: 28px; }
+  .story__text { position: static; width: auto; margin: 0 0 56px; }
+}
+/* 작은 소개는 브랜드 이름 위 오른쪽에 (겹치지 않게) */
+.story__text { position: static; width: auto; max-width: 340px; margin: 0 0 clamp(36px, 5vw, 80px) 60%; }
+@media (max-width: 760px) { .story__text { margin: 0 0 56px; max-width: none; } }
+/* 보내준 시안처럼 가로로 긴 종이 비율 */
+@media (min-width: 761px) { .story { min-height: 0; aspect-ratio: 1.414 / 1; } }

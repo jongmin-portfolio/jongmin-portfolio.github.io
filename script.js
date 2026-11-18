@@ -798,3 +798,17 @@ if (new URLSearchParams(location.search).has("edit")) {
   addEventListener("hashchange", route);
   route();
 }
+
+// ===== 브랜드 스토리: 브랜드 이름이 칸 너비에 꽉 차도록 글자 크기 맞추기 =====
+function fitStoryMarks() {
+  document.querySelectorAll(".story__mark").forEach((el) => {
+    const span = el.querySelector("span");
+    if (!span) return;
+    el.style.fontSize = "100px";
+    const w = span.getBoundingClientRect().width;
+    if (w) el.style.fontSize = `${(100 * el.clientWidth) / w}px`;
+  });
+}
+fitStoryMarks();
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(fitStoryMarks);
+window.addEventListener("resize", fitStoryMarks);

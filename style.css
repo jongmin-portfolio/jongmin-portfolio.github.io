@@ -673,3 +673,23 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
 /* evne 타일: 패키지처럼 타일마다 로고 색을 지정 (--ink) */
 .colortile__mask { display: block; height: clamp(22px, 3vw, 42px); aspect-ratio: 3.25 / 1; max-width: 66%; background: var(--ink); -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; }
 @media (max-width: 520px) { .colortile__mask { height: 20px; } }
+/* HEALTH BRANDS 탭: 이름 아래 가로선 + 하위 브랜드 로고 4개 */
+.story__subs { order: 3; position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px clamp(14px, 2.2vw, 28px); margin-top: 22px; padding-top: 20px; border-top: 1px solid rgba(63, 62, 58, .35); width: min(78%, 520px); }
+.story__sub { display: block; width: auto; height: clamp(9px, 1vw, 13px); opacity: .78; }
+.story__sub--bak { height: clamp(20px, 2.2vw, 28px); }
+.story__sub--daytamin { height: clamp(12px, 1.3vw, 17px); }
+.story--logo.is-dark .story__subs { border-top-color: rgba(246, 243, 236, .45); }
+.story--logo.is-dark .story__sub { filter: invert(1); }
+body.is-brand-view .story__subs { width: min(60%, 560px); }
+body.is-brand-view .story__sub { height: clamp(12px, 1.3vw, 18px); }
+body.is-brand-view .story__sub--bak { height: clamp(26px, 3vw, 38px); }
+body.is-brand-view .story__sub--daytamin { height: clamp(16px, 1.7vw, 23px); }
+body:not(.is-brand-view) .brand-grid .story__subs { width: 88%; flex-wrap: nowrap; gap: 0 clamp(8px, 1vw, 14px); margin-top: 16px; padding-top: 14px; }
+body:not(.is-brand-view) .brand-grid .story__sub { height: clamp(6px, .62vw, 9px); }
+body:not(.is-brand-view) .brand-grid .story__sub--bak { height: clamp(15px, 1.5vw, 21px); }
+body:not(.is-brand-view) .brand-grid .story__sub--daytamin { height: clamp(8px, .82vw, 12px); }
+@media (max-width: 760px) { body:not(.is-brand-view) .brand-grid .story__subs { width: 84%; } }
+.colortile__logo--kindoh { height: clamp(22px, 3vw, 42px); }
+@media (max-width: 520px) { .colortile__logo--kindoh { height: 20px; } }
+.logosys__img[src*="logo_kindoh"] { width: 42%; height: auto; max-height: none; }
+@media (max-width: 760px) { .logosys__img[src*="logo_kindoh"] { width: 62%; } }

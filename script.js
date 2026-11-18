@@ -975,3 +975,20 @@ addEventListener("hashchange", () => setTimeout(drawLogoGuides, 60));
 document.addEventListener("transitionend", () => requestAnimationFrame(drawLogoGuides));
 addEventListener("load", () => setTimeout(drawLogoGuides, 60));
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(drawLogoGuides, 60));
+
+// ===== 브랜드 탭 이름: 긴 이름은 탭 너비의 약 50%를 넘지 않게 줄임 (manucurist 정도 크기) =====
+function fitGridMarks() {
+  document.querySelectorAll(".brand-grid .story--logo .story__mark").forEach((m) => {
+    const story = m.closest(".story");
+    m.style.removeProperty("font-size");
+    if (document.body.classList.contains("is-brand-view")) return;
+    const span = m.querySelector("span") || m;
+    const max = story.clientWidth * (story.clientWidth < 500 ? 0.62 : 0.5);
+    const w = span.getBoundingClientRect().width;
+    if (w > max) m.style.setProperty("font-size", (parseFloat(getComputedStyle(m).fontSize) * max) / w + "px", "important");
+  });
+}
+addEventListener("resize", () => requestAnimationFrame(fitGridMarks));
+addEventListener("hashchange", () => setTimeout(fitGridMarks, 60));
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(fitGridMarks, 60));
+addEventListener("load", fitGridMarks);

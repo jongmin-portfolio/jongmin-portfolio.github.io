@@ -659,3 +659,6 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
 .logosys__guides line { stroke: rgba(120, 120, 118, .8); }
 /* 브랜드 상세의 큰 번호 카드: 예전 회색으로 되돌림 (2026-11-18 요청) */
 .chapter { --brand: #b4afa8 !important; --brand-bg: #ebe9e5 !important; }
+/* 컬러 타일 브랜드명: COLOR SYSTEM 라벨과 같은 Jost 글꼴 (넓은 자간) */
+.colortile__name, .colortile__name.is-lower { font-family: "Jost", sans-serif; font-weight: 400; letter-spacing: .2em; margin-right: -.2em; }
+@media (max-width: 520px) { .colortile__name, .colortile__name.is-lower { letter-spacing: .12em; margin-right: -.12em; } }

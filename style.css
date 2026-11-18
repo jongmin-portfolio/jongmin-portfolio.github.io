@@ -472,3 +472,6 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 
 /* 챕터 큰 번호(01, 02…)도 Jost 가는 글꼴로 */
 .chapter__no { font-family: "Jost", sans-serif; font-variation-settings: normal; font-weight: 200; letter-spacing: -0.03em; line-height: 0.9; }
+
+/* 챕터 브랜드 이름 크기 절반 (큰 화면 40px → 20px, 휴대폰은 읽기 좋게 최소 14px) */
+.chapter__panel h2 { font-size: clamp(14px, 1.4vw, 20px); }

@@ -475,3 +475,6 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 
 /* 챕터 브랜드 이름 크기 절반 (큰 화면 40px → 20px, 휴대폰은 읽기 좋게 최소 14px) */
 .chapter__panel h2 { font-size: clamp(14px, 1.4vw, 20px); }
+
+/* 브랜드 이름과 아래 설명 사이 회색 가는 선 */
+.chapter__cap { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(23, 22, 20, 0.16); }

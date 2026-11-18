@@ -944,3 +944,68 @@ addEventListener("resize", () => requestAnimationFrame(drawLogoGuides));
 document.addEventListener("transitionend", () => requestAnimationFrame(drawLogoGuides));
 addEventListener("hashchange", () => setTimeout(drawLogoGuides, 60));
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(drawLogoGuides, 60));
+
+// ===== 로고 시스템(실제 로고 이미지): 글자 모양을 읽어서 가이드 그리기 =====
+function drawImageLogoGuides() {
+  document.querySelectorAll(".chapter.is-open .logosys__stage").forEach((stage) => {
+    const img = stage.querySelector(".logosys__img");
+    const svg = stage.querySelector(".logosys__guides");
+    if (!img || !svg || !img.complete || !img.naturalWidth) return;
+    const W = stage.clientWidth, H = stage.clientHeight;
+    const dw = img.offsetWidth, dh = img.offsetHeight, ox = img.offsetLeft, oy = img.offsetTop;
+    if (!W || !dw) return;
+    // 이미지의 잉크(글자) 영역 분석 — 한 번만
+    if (!img._ink) {
+      const cw = 600, ch = Math.round((img.naturalHeight / img.naturalWidth) * cw);
+      const c = document.createElement("canvas"); c.width = cw; c.height = ch;
+      const g = c.getContext("2d"); g.drawImage(img, 0, 0, cw, ch);
+      const a = g.getImageData(0, 0, cw, ch).data;
+      const on = (x, y) => a[(y * cw + x) * 4 + 3] > 90;
+      const col = []; for (let x = 0; x < cw; x++) { let t = -1, b = -1; for (let y = 0; y < ch; y++) if (on(x, y)) { if (t < 0) t = y; b = y; } col.push([t, b]); }
+      const segs = []; let cur = null, gap = 0;
+      for (let x = 0; x < cw; x++) {
+        const [t, b] = col[x];
+        if (t >= 0) { if (!cur) cur = { l: x, r: x, t, b }; else { cur.r = x; cur.t = Math.min(cur.t, t); cur.b = Math.max(cur.b, b); } gap = 0; }
+        else if (cur && ++gap > 2) { segs.push(cur); cur = null; }
+      }
+      if (cur) segs.push(cur);
+      segs.forEach((s) => {
+        const cx = Math.round((s.l + s.r) / 2), cy = Math.round((s.t + s.b) / 2);
+        const ix = Math.max(1, Math.round((s.r - s.l) * 0.08)), iy = Math.max(1, Math.round((s.b - s.t) * 0.08));
+        s.hollow = !on(cx, cy);
+        // 둥근 모양: 네 모서리가 비어 있음 (R, 한글 등은 모서리에 획이 있음)
+        s.round = !on(s.l + ix, s.t + iy) && !on(s.r - ix, s.t + iy) && !on(s.l + ix, s.b - iy) && !on(s.r - ix, s.b - iy);
+      });
+      img._ink = { cw, ch, segs };
+    }
+    const { cw, ch, segs } = img._ink;
+    const sx = dw / cw, sy = dh / ch;
+    const med = (arr) => { const v = [...arr].sort((p, q) => p - q); return v[Math.floor(v.length / 2)]; };
+    const tops = segs.map((s) => s.t), bots = segs.map((s) => s.b);
+    const top = Math.min(...tops), cap = med(tops), base = med(bots), bot = Math.max(...bots);
+    const Y = (v) => oy + v * sy, X = (v) => ox + v * sx;
+    const out = [];
+    const h = (y, label) => out.push(`<line x1="0" x2="${W}" y1="${y}" y2="${y}" class="g"/>` + (label ? `<text x="${W - 12}" y="${y - 6}" class="lb">${label}</text>` : ""));
+    if (cap - top > ch * 0.06) h(Y(top), "ASCENDER");
+    h(Y(cap), "CAP HEIGHT");
+    h(Y((cap + base) / 2), "MIDLINE");
+    h(Y(base + 1), "BASELINE");
+    if (bot - base > ch * 0.06) h(Y(bot + 1), "DESCENDER");
+    const xs = [];
+    segs.forEach((s) => {
+      [X(s.l), X(s.r + 1)].forEach((x) => { if (!xs.some((v) => Math.abs(v - x) < 4)) xs.push(x); });
+      const w = s.r - s.l, hh = s.b - s.t, ratio = w / Math.max(1, hh);
+      if (ratio > 0.8 && ratio < 1.25 && hh > (base - cap) * 0.6 && s.round && (s.hollow || hh > ch * 0.8)) {
+        out.push(`<circle cx="${X((s.l + s.r + 1) / 2)}" cy="${Y((s.t + s.b + 1) / 2)}" r="${(Math.max(w * sx, hh * sy)) / 2 + 1}" class="c"/>`);
+      }
+    });
+    xs.forEach((x) => out.push(`<line x1="${x}" x2="${x}" y1="0" y2="${H}" class="g v"/>`));
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = out.join("");
+  });
+}
+document.querySelectorAll(".logosys__img").forEach((img) => img.addEventListener("load", () => requestAnimationFrame(drawImageLogoGuides)));
+addEventListener("resize", () => requestAnimationFrame(drawImageLogoGuides));
+addEventListener("hashchange", () => setTimeout(drawImageLogoGuides, 60));
+document.addEventListener("transitionend", () => requestAnimationFrame(drawImageLogoGuides));
+addEventListener("load", () => setTimeout(drawImageLogoGuides, 60));

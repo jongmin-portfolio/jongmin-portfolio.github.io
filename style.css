@@ -613,3 +613,6 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 .logosys__guides .c { fill: none; stroke: #6e7f90; stroke-width: 1; vector-effect: non-scaling-stroke; }
 .logosys__guides .lb { font-family: "Jost", sans-serif; font-size: 10px; letter-spacing: .14em; fill: rgba(70, 80, 92, .55); text-anchor: end; }
 @media (max-width: 760px) { .logosys { margin-top: 40px; } .logosys__stage { aspect-ratio: 4 / 3; } .logosys__word { font-size: clamp(26px, 9vw, 56px); } .logosys__guides .lb { display: none; } }
+/* 실제 로고 파일이 있는 브랜드: 연한 단색으로 표시 */
+.logosys__img { position: relative; z-index: 1; display: block; max-width: 64%; max-height: 46%; width: auto; height: auto; opacity: .16; }
+@media (max-width: 760px) { .logosys__img { max-width: 76%; max-height: 50%; } }

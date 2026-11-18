@@ -651,3 +651,9 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
   body:not(.is-brand-view) .brand-grid .story { aspect-ratio: 1.2 / 1 !important; }
   body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: 28px !important; }
 }
+/* 로고 시스템 바탕: 회색 (2026-11-18 요청) */
+.logosys__stage { --ls-bg: #E4E4E2 !important; }
+.logosys__title, .logosys__tag { color: #858583; }
+.logosys__tag::before { border-left-color: #858583; }
+.logosys__tag::after { border-right-color: #858583; }
+.logosys__guides line { stroke: rgba(120, 120, 118, .8); }

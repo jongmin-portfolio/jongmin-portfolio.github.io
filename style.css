@@ -693,3 +693,16 @@ body:not(.is-brand-view) .brand-grid .story__sub--daytamin { height: clamp(8px, 
 @media (max-width: 520px) { .colortile__logo--kindoh { height: 20px; } }
 .logosys__img[src*="logo_kindoh"] { width: 42%; height: auto; max-height: none; }
 @media (max-width: 760px) { .logosys__img[src*="logo_kindoh"] { width: 62%; } }
+/* BEAUTY BRANDS 하위 로고 (IN&OUT은 비스듬히 인쇄돼 있어 비슷한 굵은 글꼴로 표기) */
+.story__subtxt { font-family: "Montserrat", sans-serif; font-weight: 800; font-size: clamp(10px, 1.1vw, 15px); line-height: 1; letter-spacing: -.02em; color: #000; opacity: .78; }
+.story--logo.is-dark .story__subtxt { color: #fff; }
+.story__sub--chanb { height: clamp(9px, 1vw, 13px); }
+.story__sub--slowme { height: clamp(10px, 1.1vw, 15px); }
+.story__sub--bvid { height: clamp(9px, 1vw, 13px); }
+.story__sub--vikkot { height: clamp(11px, 1.25vw, 17px); }
+body.is-brand-view .story__subtxt { font-size: clamp(13px, 1.4vw, 19px); }
+body.is-brand-view .story__sub--slowme { height: clamp(14px, 1.5vw, 20px); }
+body.is-brand-view .story__sub--vikkot { height: clamp(15px, 1.6vw, 22px); }
+body:not(.is-brand-view) .brand-grid .story__subtxt { font-size: clamp(7px, .72vw, 10px); }
+body:not(.is-brand-view) .brand-grid .story__sub--slowme { height: clamp(7px, .75vw, 10px); }
+body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .85vw, 12px); }

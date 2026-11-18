@@ -286,6 +286,13 @@ document.querySelectorAll("[data-gallery]").forEach((btn) => {
     modalBody.replaceChildren(tpl.content.cloneNode(true));
     frameImages(modalBody);
     applyCrops(modalBody);
+    // 사진 아래 설명은 이름 없이 순번(01, 02…)만
+    let capNo = 0;
+    modalBody.querySelectorAll(".gallery-modal__grid figure").forEach((fig) => {
+      if (fig.classList.contains("is-deleted")) return;
+      const cap = fig.querySelector("figcaption");
+      if (cap) cap.textContent = String(++capNo).padStart(2, "0");
+    });
     // 각 이미지를 버튼으로 감싸서 클릭하면 크게 보기
     modalBody.querySelectorAll(".gallery-modal__grid figure").forEach((fig) => {
       const frame = fig.querySelector(".frame");
@@ -345,7 +352,7 @@ function showLightbox(i) {
     lbImg.style.scale = c && c.s !== 1 ? String(c.s) : "";
     lbFrame.style.backgroundColor = c?.b || "";
   }
-  lbCap.textContent = `${fig.querySelector("figcaption")?.textContent ?? ""} · ${lbIndex + 1} / ${figs.length}`;
+  lbCap.textContent = `${String(lbIndex + 1).padStart(2, "0")} / ${String(figs.length).padStart(2, "0")}`;
   lbPrev.hidden = lbNext.hidden = figs.length < 2;
 }
 function openLightbox(i) {

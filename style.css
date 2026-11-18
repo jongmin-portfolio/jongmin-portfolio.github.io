@@ -506,3 +506,5 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 @media (max-width: 760px) { .story__text { margin: 0 0 56px; max-width: none; } }
 /* 보내준 시안처럼 가로로 긴 종이 비율 */
 @media (min-width: 761px) { .story { min-height: 0; aspect-ratio: 1.414 / 1; } }
+/* 브랜드 소개 글이 길어져서 폭 조금 넓게 */
+.story__text { max-width: 380px; line-height: 1.85; }

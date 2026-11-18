@@ -469,3 +469,6 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 /* 숫자 아래 영문(BRANDS 등)은 숫자 기준 가운데 맞춤 */
 .hero__stats li { text-align: center; }
 .hero__stats span { letter-spacing: 0.14em; margin-right: -0.14em; }
+
+/* 챕터 큰 번호(01, 02…)도 Jost 가는 글꼴로 */
+.chapter__no { font-family: "Jost", sans-serif; font-variation-settings: normal; font-weight: 200; letter-spacing: -0.03em; line-height: 0.9; }

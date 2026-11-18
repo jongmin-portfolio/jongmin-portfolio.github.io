@@ -657,3 +657,5 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
 .logosys__tag::before { border-left-color: #858583; }
 .logosys__tag::after { border-right-color: #858583; }
 .logosys__guides line { stroke: rgba(120, 120, 118, .8); }
+/* 브랜드 상세의 큰 번호 카드: 예전 회색으로 되돌림 (2026-11-18 요청) */
+.chapter { --brand: #b4afa8 !important; --brand-bg: #ebe9e5 !important; }

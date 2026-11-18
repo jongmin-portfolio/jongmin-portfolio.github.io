@@ -441,3 +441,8 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .lb__frame[hidden] { display: none; }
 .lb__frame .lb__img { display: block; width: 100%; height: 100%; max-width: none; max-height: none; border-radius: 0; object-fit: cover; }
 @media (max-width: 760px) { .lb__frame { width: min(calc(100vw - 24px), calc(100vh - 180px)); } }
+
+/* 메인 카피 아래 소개 문구 */
+.hero__desc { max-width: 520px; line-height: 1.8; }
+.hero__desc strong { display: block; margin-bottom: 6px; color: var(--ink); font-weight: 600; }
+.hero__tags { margin: 18px 0 0; font-family: "Jost", sans-serif; font-size: 12px; letter-spacing: 0.16em; color: var(--sub); }

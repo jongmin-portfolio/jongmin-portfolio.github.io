@@ -983,7 +983,7 @@ function fitGridMarks() {
     m.style.removeProperty("font-size");
     if (document.body.classList.contains("is-brand-view")) return;
     const span = m.querySelector("span") || m;
-    const max = story.clientWidth * (story.clientWidth < 500 ? 0.62 : 0.5);
+    const max = story.clientWidth * (story.clientWidth < 500 ? 0.7 : 0.64);
     const w = span.getBoundingClientRect().width;
     if (w > max) m.style.setProperty("font-size", (parseFloat(getComputedStyle(m).fontSize) * max) / w + "px", "important");
   });

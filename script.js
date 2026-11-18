@@ -783,17 +783,63 @@ if (new URLSearchParams(location.search).has("edit")) {
   setMode("crop");
 }
 
-// ===== 이력서 · 자기소개서: 탭을 누르면 별도 화면으로 =====
+// ===== 화면 전환: 이력서 · 자기소개서 · 브랜드 상세 =====
+// 처음에는 브랜드마다 첫 장(스토리)만 보이고, 누르면 그 브랜드 상세(사진·설명) 화면으로 들어감
 {
   const pages = [...document.querySelectorAll(".page")];
+  const chapters = [...document.querySelectorAll(".chapter")];
+  const brandName = (c) => c.querySelector(".chapter__panel h2")?.textContent.trim() || c.id;
+
+  chapters.forEach((ch, i) => {
+    const story = ch.querySelector(".story");
+    if (story) {
+      story.setAttribute("role", "link");
+      story.tabIndex = 0;
+      story.setAttribute("aria-label", `${brandName(ch)} 자세히 보기`);
+      const open = () => { if (!ch.classList.contains("is-open")) location.hash = ch.id; };
+      story.addEventListener("click", (e) => { if (!document.body.classList.contains("is-editing") || !e.target.closest("img")) open(); });
+      story.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    }
+    // 상세 화면 위: 전체 브랜드로 돌아가기 / 아래: 다음 브랜드
+    const bar = document.createElement("div");
+    bar.className = "brand-bar";
+    bar.innerHTML = `<a class="brand-bar__back" href="#all">← ALL BRANDS</a><span class="brand-bar__count">${String(i + 1).padStart(2, "0")} / ${String(chapters.length).padStart(2, "0")}</span>`;
+    ch.prepend(bar);
+    const next = chapters[i + 1] || chapters[0];
+    const foot = document.createElement("div");
+    foot.className = "brand-next";
+    foot.innerHTML = `<a class="brand-next__back" href="#all">← ALL BRANDS</a><a class="brand-next__go" href="#${next.id}"><span>NEXT BRAND</span><strong>${brandName(next)} →</strong></a>`;
+    ch.append(foot);
+  });
+
+  let openId = null;
   const route = () => {
     const id = decodeURIComponent(location.hash.slice(1));
     const page = pages.find((p) => p.id === id);
+    const target = id && id !== "all" ? document.getElementById(id) : null;
+    const ch = !page && target ? target.closest(".chapter") : null;
+    const prev = openId;
+
     pages.forEach((p) => { p.hidden = p !== page; });
+    chapters.forEach((c) => c.classList.toggle("is-open", c === ch));
+    openId = ch ? ch.id : null;
     document.body.classList.toggle("is-page-view", !!page);
+    document.body.classList.toggle("is-brand-view", !!ch);
     document.querySelectorAll(".top nav a").forEach((a) => a.classList.toggle("is-on", !!page && a.getAttribute("href") === `#${id}`));
-    if (page) scrollTo({ top: 0, behavior: "instant" });
-    else if (id) document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
+
+    if (ch) {
+      ch.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in"));
+      dispatchEvent(new Event("resize"));
+      if (id === ch.id) scrollTo({ top: 0, behavior: "instant" });
+      else target.scrollIntoView({ behavior: "instant" });
+    } else if (page) {
+      scrollTo({ top: 0, behavior: "instant" });
+    } else if (prev && (!id || id === "all")) {
+      dispatchEvent(new Event("resize"));
+      document.getElementById(prev)?.scrollIntoView({ behavior: "instant" });
+    } else if (target) {
+      target.scrollIntoView({ behavior: "instant" });
+    }
   };
   addEventListener("hashchange", route);
   route();

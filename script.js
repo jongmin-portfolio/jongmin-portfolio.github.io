@@ -885,3 +885,62 @@ function fitStoryMarks() {
 fitStoryMarks();
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitStoryMarks);
 window.addEventListener("resize", fitStoryMarks);
+
+// ===== 로고 시스템: 브랜드 이름 위에 구성 가이드(기준선 · 글자 간격 · 원) 그리기 =====
+function drawLogoGuides() {
+  document.querySelectorAll(".chapter.is-open .logosys__stage").forEach((stage) => {
+    const word = stage.querySelector(".logosys__word");
+    const svg = stage.querySelector(".logosys__guides");
+    if (!word || !svg) return;
+    // 글자마다 감싸서 위치 재기 (한 번만)
+    if (!word.dataset.split) {
+      const t = word.textContent;
+      word.textContent = "";
+      [...t].forEach((c) => { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; word.append(s); });
+      const bl = document.createElement("span"); bl.className = "bl"; word.append(bl);
+      word.dataset.split = "1";
+    }
+    const W = stage.clientWidth, H = stage.clientHeight;
+    if (!W) return;
+    // 이름이 길어도 바탕 안에 들어가도록 글자 크기 맞추기
+    word.style.fontSize = "100px";
+    const nat = word.offsetWidth || 1;
+    word.style.fontSize = Math.min(W < 700 ? 72 : 176, (W * 0.74 * 100) / nat) + "px";
+    const cs = getComputedStyle(word);
+    const ctx = (drawLogoGuides.c ||= document.createElement("canvas").getContext("2d"));
+    ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const base = word.offsetTop + word.querySelector(".bl").offsetTop;
+    const cap = ctx.measureText("H").actualBoundingBoxAscent;
+    const xh = ctx.measureText("x").actualBoundingBoxAscent;
+    const desc = ctx.measureText("p").actualBoundingBoxDescent;
+    const asc = ctx.measureText("d").actualBoundingBoxAscent;
+    const lines = [];
+    const h = (y, label) => lines.push(`<line x1="0" x2="${W}" y1="${y}" y2="${y}" class="g"/>` + (label ? `<text x="${W - 12}" y="${y - 6}" class="lb">${label}</text>` : ""));
+    h(base - Math.max(cap, asc), "ASCENDER");
+    if (Math.abs(asc - cap) > 10) h(base - cap, "CAP HEIGHT");
+    h(base - xh, "X-HEIGHT");
+    h(base, "BASELINE");
+    h(base + desc, "DESCENDER");
+    // 글자 경계 세로선 + 둥근 글자 위 원
+    const xs = [];
+    const round = /[oOeEcCGQ0]/;
+    word.querySelectorAll(".ch").forEach((ch) => {
+      if (!ch.textContent.trim()) return;
+      const l = word.offsetLeft + ch.offsetLeft, rr = l + ch.offsetWidth;
+      [l, rr].forEach((x) => { if (!xs.some((v) => Math.abs(v - x) < 3)) xs.push(x); });
+      if (round.test(ch.textContent)) {
+        const isUp = ch.textContent === ch.textContent.toUpperCase() && /[A-Z0]/.test(ch.textContent);
+        const d = isUp ? cap : xh;
+        const cx = (l + rr) / 2, cy = base - d / 2, rad = Math.min(d, rr - l) / 2;
+        lines.push(`<circle cx="${cx}" cy="${cy}" r="${rad}" class="c"/>`);
+      }
+    });
+    xs.forEach((x) => lines.push(`<line x1="${x}" x2="${x}" y1="0" y2="${H}" class="g v"/>`));
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = lines.join("");
+  });
+}
+addEventListener("resize", () => requestAnimationFrame(drawLogoGuides));
+document.addEventListener("transitionend", () => requestAnimationFrame(drawLogoGuides));
+addEventListener("hashchange", () => setTimeout(drawLogoGuides, 60));
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(drawLogoGuides, 60));

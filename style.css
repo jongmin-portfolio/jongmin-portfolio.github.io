@@ -599,3 +599,17 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 .colortile { padding: 0 10px; text-align: center; }
 .colortile__name { max-width: 100%; overflow-wrap: anywhere; line-height: 1.15; }
 @media (max-width: 520px) { .colortile__name { font-size: 13px; letter-spacing: .04em; } .colortile__hex { font-size: 9px; } }
+
+/* ===== 로고 시스템: 연한 바탕 + 연한 워드마크 + 점선 구성 가이드 ===== */
+.logosys { grid-column: 1 / -1; margin-top: 56px; }
+.logosys__stage { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 2 / 1; border-radius: 16px; overflow: hidden; background: #f1f6f9; }
+.logosys__word { position: relative; z-index: 1; font-family: "Montserrat", "Pretendard", sans-serif; font-weight: 600; font-size: clamp(44px, 11vw, 176px); line-height: 1; letter-spacing: .01em; color: #dde5ec; white-space: nowrap; text-transform: uppercase; }
+.logosys__word.is-lower { text-transform: none; }
+.logosys__word .ch { display: inline-block; }
+.logosys__word .bl { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
+.logosys__guides { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.logosys__guides .g { stroke: rgba(70, 80, 92, .38); stroke-width: 1; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+.logosys__guides .g.v { stroke: rgba(70, 80, 92, .28); }
+.logosys__guides .c { fill: none; stroke: #6e7f90; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.logosys__guides .lb { font-family: "Jost", sans-serif; font-size: 10px; letter-spacing: .14em; fill: rgba(70, 80, 92, .55); text-anchor: end; }
+@media (max-width: 760px) { .logosys { margin-top: 40px; } .logosys__stage { aspect-ratio: 4 / 3; } .logosys__word { font-size: clamp(26px, 9vw, 56px); } .logosys__guides .lb { display: none; } }

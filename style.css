@@ -670,3 +670,6 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
 @media (max-width: 520px) { .colortile__logo { height: 16px; max-width: 76%; } .colortile__logo--ydy { height: 24px; } .colortile__logo--myeongdong { height: 12px; } }
 .colortile__logo--evne { height: clamp(22px, 3vw, 42px); }
 @media (max-width: 520px) { .colortile__logo--evne { height: 20px; } }
+/* evne 타일: 패키지처럼 타일마다 로고 색을 지정 (--ink) */
+.colortile__mask { display: block; height: clamp(22px, 3vw, 42px); aspect-ratio: 3.25 / 1; max-width: 66%; background: var(--ink); -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; }
+@media (max-width: 520px) { .colortile__mask { height: 20px; } }

@@ -451,3 +451,15 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .group--grid .tile__text::before { font-family: "Jost", sans-serif; font-variation-settings: normal; font-size: 18px; font-weight: 400; line-height: 1.2; letter-spacing: 0.02em; }
 .brand__no { font-family: "Jost", sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0.04em; }
 @media (max-width: 760px) { .group--grid .tile__text::before { font-size: 16px; } }
+
+/* 제품이 2개 이상인 묶음은 모두 순번(01, 02…) 표시, 1개뿐이면 숫자 없이 */
+.rail:has(> .tile:nth-of-type(2)) { counter-reset: lineup; }
+.rail:has(> .tile:nth-of-type(2)) > .tile { counter-increment: lineup; }
+.rail:has(> .tile:nth-of-type(2)) .tile__text { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; }
+.rail:has(> .tile:nth-of-type(2)) .tile__text::before {
+  content: counter(lineup, decimal-leading-zero); grid-row: span 2;
+  font-family: "Jost", sans-serif; font-size: 18px; font-weight: 400; line-height: 1.2; letter-spacing: 0.02em; color: #b4afa8;
+}
+.rail:not(:has(> .tile:nth-of-type(2))) .tile__text { display: block; }
+.rail:not(:has(> .tile:nth-of-type(2))) .tile__text::before { content: none; }
+@media (max-width: 760px) { .rail:has(> .tile:nth-of-type(2)) .tile__text::before { font-size: 16px; } }

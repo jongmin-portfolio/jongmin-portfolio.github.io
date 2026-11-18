@@ -553,3 +553,25 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 @media (max-width: 760px) {
   .story__text { margin: 0 0 48px !important; }
 }
+
+/* ===== 브랜드 첫 장 v3: 브랜드 사진을 흐린 배경으로 깔고, 가운데 작은 로고(브랜드 이름) ===== */
+.story--logo { isolation: isolate; align-items: center; justify-content: center; text-align: center; background: #e7e4dd; }
+.story__bg { position: absolute; inset: -60px; z-index: -2; background-size: cover; background-position: center;
+  filter: blur(38px) saturate(.7) brightness(1.12) contrast(.92); transform: scale(1.05); }
+.story__grain { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(250, 248, 243, .28), rgba(250, 248, 243, .28)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply; opacity: .55; }
+.story--logo .story__mark { order: 1; font-size: clamp(30px, 4.6vw, 66px) !important; line-height: 1; letter-spacing: .02em; color: #3f3e3a; }
+.story--logo .story__text { order: 2; position: static; margin: 22px auto 0 !important; max-width: 560px; width: auto;
+  font-size: clamp(12px, 1vw, 14px); line-height: 1.85; color: #3f3e3a; opacity: .78; }
+.chapter:not(.is-open) .story--logo::before { color: #4a4843; opacity: .8; }
+@media (max-width: 760px) {
+  .story--logo { min-height: 420px; padding: 64px 22px 48px; }
+  .story--logo .story__text { margin-top: 18px !important; }
+}
+.story__bg { filter: blur(48px) saturate(.7) brightness(1.12) contrast(.9); }
+.story--logo.is-dark .story__grain { background-image: linear-gradient(rgba(20, 19, 17, .25), rgba(20, 19, 17, .25)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.story--logo.is-dark .story__mark, .story--logo.is-dark .story__text { color: #f6f3ec; }
+.chapter:not(.is-open) .story--logo.is-dark::before { color: #f6f3ec; }

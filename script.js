@@ -846,8 +846,34 @@ if (new URLSearchParams(location.search).has("edit")) {
 }
 
 // ===== 브랜드 스토리: 브랜드 이름이 칸 너비에 꽉 차도록 글자 크기 맞추기 =====
+// 브랜드 첫 장 배경: 그 브랜드 대표 사진을 흐리게 깔고 결(노이즈)을 얹음
+document.querySelectorAll(".chapter").forEach((ch) => {
+  const story = ch.querySelector(".story");
+  const cover = ch.querySelector(".chapter__cover > .frame img");
+  if (!story || !cover || story.querySelector(".story__bg")) return;
+  const bg = document.createElement("span");
+  bg.className = "story__bg";
+  bg.style.backgroundImage = `url("${new URL(cover.getAttribute("src"), location.href).href}")`;
+  const grain = document.createElement("span");
+  grain.className = "story__grain";
+  story.prepend(bg, grain);
+  // 배경이 어두우면 글자를 밝게
+  const probe = new Image();
+  probe.onload = () => {
+    try {
+      const c = document.createElement("canvas"); c.width = c.height = 24;
+      const x = c.getContext("2d"); x.drawImage(probe, 0, 0, 24, 24);
+      const d = x.getImageData(0, 0, 24, 24).data; let l = 0;
+      for (let i = 0; i < d.length; i += 4) l += 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+      story.classList.toggle("is-dark", l / (d.length / 4) < 120);
+    } catch (e) {}
+  };
+  probe.src = new URL(cover.getAttribute("src"), location.href).href;
+});
+
 function fitStoryMarks() {
   document.querySelectorAll(".story__mark").forEach((el) => {
+    if (el.closest(".story--logo")) { el.style.fontSize = ""; return; }
     const span = el.querySelector("span");
     if (!span) return;
     el.style.fontSize = "100px";

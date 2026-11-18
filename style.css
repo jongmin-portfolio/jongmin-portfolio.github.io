@@ -668,3 +668,5 @@ body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clam
 .colortile__logo--myeongdong { height: clamp(14px, 1.7vw, 24px); }
 .colortile.is-dark .colortile__logo { filter: brightness(0) invert(1); opacity: .92; }
 @media (max-width: 520px) { .colortile__logo { height: 16px; max-width: 76%; } .colortile__logo--ydy { height: 24px; } .colortile__logo--myeongdong { height: 12px; } }
+.colortile__logo--evne { height: clamp(22px, 3vw, 42px); }
+@media (max-width: 520px) { .colortile__logo--evne { height: 20px; } }

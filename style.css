@@ -526,7 +526,8 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 #work + .chapter, .index + .chapter { padding-top: 56px; }
 
 /* 상세 화면: 그 브랜드만 보이게 */
-body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
+body.is-brand-view main > :not(.chapter.is-open):not(.brand-grid) { display: none !important; }
+body.is-brand-view .brand-grid > .chapter:not(.is-open) { display: none !important; }
 .chapter.is-open { padding-top: 88px; }
 .brand-bar, .brand-next { display: none; }
 .chapter.is-open .brand-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-family: "Jost", sans-serif; font-size: 12px; letter-spacing: .16em; color: var(--sub); }
@@ -639,3 +640,14 @@ body.is-brand-view main > :not(.chapter.is-open) { display: none !important; }
 .foot { background: #34503f; color: #b5c4ba; border-top-color: #3d5c49; }
 .modal__close, .lb__close { background: var(--accent); }
 .story:focus-visible { outline-color: var(--accent); }
+
+/* ===== 브랜드 탭: 한 줄에 3개 (휴대폰은 1개). 11개라 마지막 칸은 비워 둠 ===== */
+body:not(.is-brand-view) .brand-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 56px var(--gut) 0; }
+body:not(.is-brand-view) .brand-grid > .chapter { padding: 0 !important; margin: 0; max-width: none; width: auto; min-width: 0; }
+body:not(.is-brand-view) .brand-grid .story { margin: 0 !important; aspect-ratio: 4 / 5 !important; min-height: 0 !important; }
+body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: clamp(18px, 2.2vw, 32px) !important; }
+@media (max-width: 760px) {
+  body:not(.is-brand-view) .brand-grid { grid-template-columns: 1fr; gap: 16px; padding-top: 40px; }
+  body:not(.is-brand-view) .brand-grid .story { aspect-ratio: 1.2 / 1 !important; }
+  body:not(.is-brand-view) .brand-grid .story--logo .story__mark { font-size: 28px !important; }
+}

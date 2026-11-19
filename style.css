@@ -705,4 +705,4 @@ body.is-brand-view .story__sub--slowme { height: clamp(14px, 1.5vw, 20px); }
 body.is-brand-view .story__sub--vikkot { height: clamp(15px, 1.6vw, 22px); }
 body:not(.is-brand-view) .brand-grid .story__subtxt { font-size: clamp(7px, .72vw, 10px); }
 body:not(.is-brand-view) .brand-grid .story__sub--slowme { height: clamp(7px, .75vw, 10px); }
-body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .85vw, 12px); }
+body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .85vw, 12px); } /* 4색 컬러 시스템 (SIORÉ): 스와치 4칸, 타일 2×2 */ .swatches--4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } .colortiles--4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } .colortiles--4 .colortile { aspect-ratio: 16 / 9; } .swatch[style*="#FFFFFF"] { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); } @media (max-width: 520px) { .swatches--4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }

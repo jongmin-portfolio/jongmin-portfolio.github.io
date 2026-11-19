@@ -748,3 +748,22 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 .logosys__cellguides line { stroke: rgba(120, 120, 118, .8); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .logosys__cellname { margin: 0; font-family: "Jost", sans-serif; font-size: 10px; letter-spacing: .2em; color: #858583; }
 @media (max-width: 760px) { .logosys__quad { width: 92%; height: 66%; } .logosys__cellname { font-size: 8px; } }
+
+/* ===== CONTACT: NEXT CHAPTER 스타일 (초록 바탕 + 오른쪽 미색 곡선) ===== */
+.contact { position: relative; overflow: hidden; padding: clamp(56px, 8vw, 104px) 0 clamp(44px, 6vw, 72px); }
+.contact::after { content: ""; position: absolute; z-index: 0; right: -38vw; top: 34%; width: 62vw; height: 62vw; max-width: none; border-radius: 50%; background: #efeadf; pointer-events: none; }
+.contact__inner { position: relative; z-index: 1; }
+.contact__kicker { display: flex; align-items: center; gap: 28px; margin: 0; max-width: 66%; font-family: "Jost", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #f6f3ec; }
+.contact__kicker i { flex: 1; height: 1px; background: rgba(246, 243, 236, .55); }
+.contact h2 { margin: clamp(26px, 3vw, 40px) 0 clamp(22px, 2.6vw, 34px); font-size: clamp(30px, 4.2vw, 58px); line-height: 1.25; letter-spacing: -0.04em; color: #f3efe6; }
+.contact__lead { margin: 0 0 32px; max-width: 760px; font-size: clamp(14px, 1.25vw, 17px); line-height: 1.85; letter-spacing: -0.02em; color: rgba(246, 243, 236, .88); }
+.contact__thanks { display: flex; align-items: center; gap: 24px; margin-top: clamp(40px, 5vw, 64px); max-width: 80%; font-family: "Jost", sans-serif; font-weight: 500; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #f6f3ec; }
+.contact__thanks i { flex: 1; height: 1px; background: rgba(246, 243, 236, .55); }
+.contact__thanks svg { width: 30px; height: 30px; flex: none; transition: transform .3s var(--ease); }
+.contact__thanks:hover svg { transform: translate(3px, -3px); }
+@media (max-width: 760px) {
+  .contact::after { right: -78vw; top: 84%; width: 100vw; height: 100vw; }
+  .contact__thanks { max-width: 86%; }
+  .contact__kicker, .contact__thanks { max-width: 100%; font-size: 11px; gap: 16px; }
+  .contact__lead br { display: none; }
+}

@@ -98,6 +98,9 @@ window.IMAGE_CROPS = {
   "assets/pharmacist__lineup__dc1.jpg": {"s":1.17,"x":49.5,"y":64.6},
   "assets/pharmacist__lineup__dc2.jpg": {"s":1,"x":50,"y":50},
   "assets/pharmacist__lineup__dc4.jpg": {"s":1.54,"x":95.4,"y":36.8},
+  "assets/pharmacist__lineup__dt1.jpg": {"s":1.09,"x":59.2,"y":0},
+  "assets/pharmacist__lineup__dt2.jpg": {"s":1.13,"x":40.8,"y":55.5},
+  "assets/pharmacist__lineup__dt3.jpg": {"s":1.06,"x":46.1,"y":100},
   "assets/pharmacist__lineup__ma1.jpg": {"s":1.38,"x":47.2,"y":65.1},
   "assets/pharmacist__lineup__ma2.jpg": {"s":1.25,"x":50,"y":58},
   "assets/pharmacist__lineup__ma3.jpg": {"s":1.25,"x":50.6,"y":56.4},
@@ -313,7 +316,8 @@ window.IMAGE_ORDER = {
   "cards:siore:2": ["gallery-si-n-cleansing","gallery-si-n-toner","gallery-si-n-serum","gallery-si-n-soothing","gallery-si-n-rich","gallery-si-n-duo","gallery-si-n-sachet"],
   "cards:siore:3": ["gallery-si-r-toner","gallery-si-r-ampoule","gallery-si-r-soothing","gallery-si-r-cream"],
   "cards:ydy:1": ["gallery-pycnogenol","gallery-liposome-c","gallery-liposome-glutathione","gallery-full-spec-multi","gallery-milk-thistle","gallery-active-heme-iron","gallery-daily-immune","gallery-pure-red-curcumin","gallery-phyto-red-curcumin","gallery-active-b-q10","gallery-magduo-k2"],
-  "cards:ydy:2": ["gallery-iherb-nad","gallery-iherb-berberine","gallery-iherb-pycnogenol","gallery-iherb-chelated-magnesium","gallery-iherb-liverdex","gallery-iherb-cmdk","gallery-iherb-active-b-q10"]
+  "cards:ydy:2": ["gallery-iherb-nad","gallery-iherb-berberine","gallery-iherb-pycnogenol","gallery-iherb-chelated-magnesium","gallery-iherb-liverdex","gallery-iherb-cmdk","gallery-iherb-active-b-q10"],
+  "tpl:gallery-ph-maka": ["assets/pharmacist__lineup__ma1.jpg","assets/pharmacist__lineup__ma3.jpg","assets/pharmacist__lineup__ma4.jpg","assets/pharmacist__lineup__ma2.jpg"]
 };
 
 // 대표 사진 (편집 모드의 "사진"에서 변경). hero = 메인 이미지, cover = 폴더 카드, thumb = 브랜드 목록 로고
@@ -343,6 +347,7 @@ window.IMAGE_SWAP = {
   "cover:gallery-magduo-k2": "assets/ydy__lineup__concept__mag_c3.jpg?v=5",
   "cover:gallery-mc-kit": "assets/manucurist__kit_pack.jpg?v=1",
   "cover:gallery-mc-polish": "assets/manucurist__c_s4.jpg?v=1",
+  "cover:gallery-ph-cleanfiber": "assets/pharmacist__lineup__dt3.jpg?v=1",
   "cover:gallery-ph-dchew": "assets/pharmacist__lineup__dc2.jpg?v=9",
   "cover:gallery-pure-red-curcumin": "assets/ydy__lineup__concept__purered_c2.jpg?v=5",
   "cover:gallery-pycnogenol": "assets/ydy__lineup__concept__pycno_c3.jpg?v=5",

@@ -795,3 +795,8 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 .logosys__img[src*="logo_yur"] { width: 22%; height: auto; max-height: none; }
 @media (max-width: 520px) { .colortile__logo--yur { height: 32px; } }
 @media (max-width: 760px) { .logosys__img[src*="logo_yur"] { width: 36%; } }
+/* manucurist 공식 로고 (manucurist PARIS) */
+.colortile__logo--manu { height: clamp(22px, 3vw, 42px); }
+.logosys__img[src*="logo_manucurist"] { width: 40%; height: auto; max-height: none; }
+@media (max-width: 520px) { .colortile__logo--manu { height: 20px; } }
+@media (max-width: 760px) { .logosys__img[src*="logo_manucurist"] { width: 62%; } }

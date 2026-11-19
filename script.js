@@ -930,6 +930,7 @@ function drawLogoGuides() {
       if (!img.complete || !img.naturalWidth) return;
       l = img.offsetLeft; t = img.offsetTop; r = l + img.offsetWidth; b = t + img.offsetHeight;
       // 악센트(É 등)처럼 일부만 튀어나온 부분은 빼고 글자 윗선/바닥선을 잡음
+      if (!img._rows && img.hasAttribute("data-full")) img._rows = { t: 0, b: 1 };
       if (!img._rows) {
         const cw = 400, ch = Math.max(1, Math.round((img.naturalHeight / img.naturalWidth) * cw));
         const c = document.createElement("canvas"); c.width = cw; c.height = ch;

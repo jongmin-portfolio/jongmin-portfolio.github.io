@@ -992,3 +992,20 @@ addEventListener("resize", () => requestAnimationFrame(fitGridMarks));
 addEventListener("hashchange", () => setTimeout(fitGridMarks, 60));
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(fitGridMarks, 60));
 addEventListener("load", fitGridMarks);
+
+// ===== HEALTH BRANDS 로고 시스템: 칸마다 로고 둘레 기준선 4개 =====
+function drawCellGuides() {
+  document.querySelectorAll(".chapter.is-open .logosys__cell").forEach((cell) => {
+    const mark = cell.querySelector(".logosys__cellmark"), svg = cell.querySelector(".logosys__cellguides");
+    const W = cell.clientWidth, H = cell.clientHeight;
+    if (!mark || !svg || !W) return;
+    const l = mark.offsetLeft, t = mark.offsetTop, r = l + mark.offsetWidth, b = t + mark.offsetHeight;
+    const ex = Math.max(12, W * 0.05), ey = Math.max(10, (b - t) * 0.6);
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = `<line x1="${l - ex}" x2="${r + ex}" y1="${t}" y2="${t}"/><line x1="${l - ex}" x2="${r + ex}" y1="${b}" y2="${b}"/><line x1="${l}" x2="${l}" y1="${t - ey}" y2="${b + ey}"/><line x1="${r}" x2="${r}" y1="${t - ey}" y2="${b + ey}"/>`;
+  });
+}
+addEventListener("resize", () => requestAnimationFrame(drawCellGuides));
+addEventListener("hashchange", () => setTimeout(drawCellGuides, 80));
+document.addEventListener("transitionend", () => requestAnimationFrame(drawCellGuides));
+addEventListener("load", () => setTimeout(drawCellGuides, 80));

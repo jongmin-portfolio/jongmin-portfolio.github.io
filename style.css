@@ -737,3 +737,14 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 .minikit__name { font-family: "Jost", sans-serif; font-size: 10px; letter-spacing: .06em; line-height: 1.2; }
 .minikit__hex { font-family: "Jost", sans-serif; font-size: 9px; letter-spacing: .08em; opacity: .7; }
 @media (max-width: 760px) { .minikits { grid-template-columns: minmax(0, 1fr); } .minikit__tile { aspect-ratio: 4 / 5; } }
+
+/* HEALTH BRANDS 로고 시스템: 4개 브랜드 2×2 */
+.logosys__quad { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 84%; height: 62%; }
+.logosys__cell { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.logosys__cell:nth-child(1), .logosys__cell:nth-child(2) { border-bottom: 1px solid rgba(120, 120, 118, .25); }
+.logosys__cell:nth-child(odd) { border-right: 1px solid rgba(120, 120, 118, .25); }
+.logosys__cellmark { position: relative; z-index: 1; display: block; height: auto; background: var(--ink); -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; }
+.logosys__cellguides { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.logosys__cellguides line { stroke: rgba(120, 120, 118, .8); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.logosys__cellname { margin: 0; font-family: "Jost", sans-serif; font-size: 10px; letter-spacing: .2em; color: #858583; }
+@media (max-width: 760px) { .logosys__quad { width: 92%; height: 66%; } .logosys__cellname { font-size: 8px; } }

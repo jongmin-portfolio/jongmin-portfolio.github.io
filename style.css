@@ -790,3 +790,8 @@ body.is-brand-view .story__sub--vikkot { height: clamp(14px, 1.5vw, 20px); }
 body:not(.is-brand-view) .brand-grid .story__sub--chanb, body:not(.is-brand-view) .brand-grid .story__sub--inout, body:not(.is-brand-view) .brand-grid .story__sub--bvid { height: clamp(7px, .7vw, 10px); }
 body:not(.is-brand-view) .brand-grid .story__sub--slowme { height: clamp(9px, .9vw, 13px); }
 body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8vw, 11px); }
+/* YU.R SKIN SOLUTION 실제 로고 */
+.colortile__logo--yur { height: clamp(34px, 4.6vw, 64px); }
+.logosys__img[src*="logo_yur"] { width: 22%; height: auto; max-height: none; }
+@media (max-width: 520px) { .colortile__logo--yur { height: 32px; } }
+@media (max-width: 760px) { .logosys__img[src*="logo_yur"] { width: 36%; } }

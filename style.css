@@ -767,3 +767,10 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
   .contact__kicker, .contact__thanks { max-width: 100%; font-size: 11px; gap: 16px; }
   .contact__lead br { display: none; }
 }
+
+/* CONTACT: 블랙 & 화이트 (2026-11-19 요청) */
+.contact { background: #151413; }
+.contact::after { background: #f6f4ef; }
+.contact__links a { border-color: rgba(255, 255, 255, .35); }
+.contact__links a:first-child, .contact__links a:hover { background: #fff; border-color: #fff; color: #151413; }
+.foot { background: #0e0d0c; color: #8a847c; border-top-color: #232120; }

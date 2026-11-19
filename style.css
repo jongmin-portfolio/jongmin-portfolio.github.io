@@ -775,3 +775,8 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 .contact__links a { border-color: rgba(255, 255, 255, .35); }
 .contact__links a:first-child, .contact__links a:hover { background: #fff; border-color: #fff; color: #151413; }
 .foot { background: #0e0d0c; color: #8a847c; border-top-color: #232120; }
+/* H.ROADS 실제 로고 (박스 사진에서 추출) */
+.colortile__logo--hroads { height: clamp(30px, 4.2vw, 58px); }
+.logosys__img[src*="logo_hroads"] { width: 20%; height: auto; max-height: none; }
+@media (max-width: 520px) { .colortile__logo--hroads { height: 28px; } }
+@media (max-width: 760px) { .logosys__img[src*="logo_hroads"] { width: 34%; } }

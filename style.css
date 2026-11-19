@@ -800,3 +800,4 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 .logosys__img[src*="logo_manucurist"] { width: 40%; height: auto; max-height: none; }
 @media (max-width: 520px) { .colortile__logo--manu { height: 20px; } }
 @media (max-width: 760px) { .logosys__img[src*="logo_manucurist"] { width: 62%; } }
+.colortile.is-dark .colortile__logo--keep { filter: none; opacity: 1; }

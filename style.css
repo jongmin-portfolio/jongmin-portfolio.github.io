@@ -780,3 +780,13 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 .logosys__img[src*="logo_hroads"] { width: 20%; height: auto; max-height: none; }
 @media (max-width: 520px) { .colortile__logo--hroads { height: 28px; } }
 @media (max-width: 760px) { .logosys__img[src*="logo_hroads"] { width: 34%; } }
+/* BEAUTY BRANDS 로고: 포트폴리오 원본 페이지에서 반듯하게 다시 추출 */
+.story__sub--chanb, .story__sub--inout, .story__sub--bvid { height: clamp(9px, 1vw, 13px); }
+.story__sub--slowme { height: clamp(12px, 1.3vw, 17px); }
+.story__sub--vikkot { height: clamp(10px, 1.1vw, 15px); }
+body.is-brand-view .story__sub--chanb, body.is-brand-view .story__sub--inout, body.is-brand-view .story__sub--bvid { height: clamp(12px, 1.3vw, 18px); }
+body.is-brand-view .story__sub--slowme { height: clamp(16px, 1.7vw, 23px); }
+body.is-brand-view .story__sub--vikkot { height: clamp(14px, 1.5vw, 20px); }
+body:not(.is-brand-view) .brand-grid .story__sub--chanb, body:not(.is-brand-view) .brand-grid .story__sub--inout, body:not(.is-brand-view) .brand-grid .story__sub--bvid { height: clamp(7px, .7vw, 10px); }
+body:not(.is-brand-view) .brand-grid .story__sub--slowme { height: clamp(9px, .9vw, 13px); }
+body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8vw, 11px); }

@@ -5,8 +5,9 @@
   --ink: #171614;
   --sub: #716b63;
   --line: #ddd7cd;
-  --accent: #476B55; /* 메인 컬러: Forest Green */
-  --accent-soft: #e3eae5;
+  --accent: #151413; /* 메인 컬러: 블랙 (그린에서 변경) */
+  --accent-soft: #ebe9e5;
+  --num: #b4afa8; /* 숫자용 그레이 */
   --wrap: 1320px;
   --gut: clamp(16px, 4vw, 48px);
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -57,7 +58,7 @@ button { font: inherit; color: inherit; }
 .hero__stats { display: flex; gap: 44px; margin: 0; padding: 0; list-style: none; }
 .hero__stats b {
   display: block; font-family: "Bodoni Moda", serif; font-size: clamp(44px, 4.6vw, 68px); font-weight: 400;
-  font-variation-settings: "opsz" 96; line-height: 1; letter-spacing: -0.02em; color: var(--accent);
+  font-variation-settings: "opsz" 96; line-height: 1; letter-spacing: -0.02em; color: var(--num);
 }
 .hero__stats span { display: block; margin-top: 8px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
 .hero__cta {
@@ -179,7 +180,7 @@ button { font: inherit; color: inherit; }
 .group--grid .tile__text { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; }
 .group--grid .tile__text::before {
   content: counter(lineup, decimal-leading-zero); grid-row: span 2;
-  font-family: "Bodoni Moda", serif; font-variation-settings: "opsz" 96; font-size: 24px; line-height: 1; color: var(--accent);
+  font-family: "Bodoni Moda", serif; font-variation-settings: "opsz" 96; font-size: 24px; line-height: 1; color: var(--num);
 }
 .group--grid .tile__text strong { font-size: 14px; line-height: 1.35; }
 .group--grid .tile__text span { font-size: 12px; }
@@ -422,7 +423,7 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .brands__head { display: flex; justify-content: space-between; margin: 0 0 4px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); font-size: 12px; font-weight: 600; letter-spacing: .12em; color: var(--sub); }
 .brands__list { margin: 0; padding: 0; list-style: none; }
 .brand { display: grid; grid-template-columns: 44px 1fr; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
-.brand__no { grid-row: span 2; font-family: "Bodoni Moda", serif; font-size: 20px; color: var(--accent); transition: color .3s; }
+.brand__no { grid-row: span 2; font-family: "Bodoni Moda", serif; font-size: 20px; color: var(--num); transition: color .3s; }
 .brand__name { font-size: clamp(17px, 1.6vw, 21px); font-weight: 500; letter-spacing: .03em; text-transform: uppercase; transition: transform .35s var(--ease); }
 .brand__name.is-lower { text-transform: none; }
 .brand__meta { margin-top: 2px; font-size: 13px; color: var(--sub); transition: transform .35s var(--ease); }
@@ -460,7 +461,7 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .rail:has(> .tile:nth-of-type(2)) .tile__text { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; }
 .rail:has(> .tile:nth-of-type(2)) .tile__text::before {
   content: counter(lineup, decimal-leading-zero); grid-row: span 2;
-  font-family: "Jost", sans-serif; font-size: 18px; font-weight: 400; line-height: 1.2; letter-spacing: 0.02em; color: var(--accent);
+  font-family: "Jost", sans-serif; font-size: 18px; font-weight: 400; line-height: 1.2; letter-spacing: 0.02em; color: var(--num);
 }
 .rail:not(:has(> .tile:nth-of-type(2))) .tile__text { display: block; }
 .rail:not(:has(> .tile:nth-of-type(2))) .tile__text::before { content: none; }
@@ -518,7 +519,7 @@ body.is-page-view main > :not(.page), body.is-page-view .foot { display: none; }
 .chapter:not(.is-open) .story:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -30px rgba(40, 36, 30, .35); }
 .chapter:not(.is-open) .story::before {
   content: "VIEW PROJECT  →"; position: absolute; left: clamp(20px, 2.6vw, 40px); top: clamp(20px, 3vw, 40px);
-  font-family: "Jost", sans-serif; font-size: 12px; letter-spacing: .18em; color: var(--accent);
+  font-family: "Jost", sans-serif; font-size: 12px; letter-spacing: .18em; color: #8a857e;
   opacity: .75; transition: opacity .3s, letter-spacing .4s var(--ease);
 }
 .chapter:not(.is-open) .story:hover::before { opacity: 1; letter-spacing: .24em; }
@@ -628,16 +629,16 @@ body.is-brand-view .brand-grid > .chapter:not(.is-open) { display: none !importa
 .logosys__guides line { stroke: rgba(143, 130, 112, .85); }
 .logosys__tint { display: none; }
 
-/* ===== 메인 컬러 Forest Green(#476B55) 적용 ===== */
+/* ===== 메인 컬러 적용 (블랙) ===== */
 ::selection { background: var(--accent); color: #fff; }
 .top nav a:hover, .page__back:hover { color: var(--accent); }
 .hero__cta { background: var(--accent); }
 .toc a:hover, .group__nav button:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
 .contact { background: var(--accent); }
-.contact .eyebrow { color: #c9d8ce; }
+.contact .eyebrow { color: #a8a199; }
 .contact__links a { border-color: rgba(255, 255, 255, .35); }
 .contact__links a:first-child, .contact__links a:hover { color: var(--accent); }
-.foot { background: #34503f; color: #b5c4ba; border-top-color: #3d5c49; }
+.foot { background: #0e0d0c; color: #8a847c; border-top-color: #232120; }
 .modal__close, .lb__close { background: var(--accent); }
 .story:focus-visible { outline-color: var(--accent); }
 

@@ -802,3 +802,9 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
 @media (max-width: 760px) { .logosys__img[src*="logo_manucurist"] { width: 62%; } }
 .colortile.is-dark .colortile__logo--keep { filter: none; opacity: 1; }
 .about__sub { margin: 22px 0 0; max-width: 34em; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.85; letter-spacing: -0.01em; color: var(--sub); }
+@media (max-width: 760px) {
+  .contact { padding: 92px 0 64px; }
+  .contact h2 { margin: 34px 0 26px; }
+  .contact__lead { margin-bottom: 40px; }
+  .contact__thanks { margin-top: 56px; }
+}

@@ -351,6 +351,12 @@ function showLightbox(i) {
     lbImg.style.transformOrigin = pos;
     lbImg.style.scale = c && c.s !== 1 ? String(c.s) : "";
     lbFrame.style.backgroundColor = c?.b || "";
+    const grid = fig.closest(".gallery-modal__grid");
+    const long = !!grid?.classList.contains("is-long");
+    lbFrame.classList.toggle("is-scroll", long);
+    lbFrame.classList.toggle("is-fit", !!grid?.classList.contains("is-natural"));
+    if (long || grid?.classList.contains("is-natural")) { lbImg.style.objectPosition = ""; lbImg.style.scale = ""; lbFrame.style.backgroundColor = ""; }
+    lbFrame.scrollTop = 0;
   }
   lbCap.textContent = `${String(lbIndex + 1).padStart(2, "0")} / ${String(figs.length).padStart(2, "0")}`;
   lbPrev.hidden = lbNext.hidden = figs.length < 2;

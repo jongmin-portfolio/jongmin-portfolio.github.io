@@ -808,3 +808,13 @@ body:not(.is-brand-view) .brand-grid .story__sub--vikkot { height: clamp(8px, .8
   .contact__lead { margin-bottom: 40px; }
   .contact__thanks { margin-top: 56px; }
 }
+/* 상세페이지·이벤트 페이지처럼 긴 이미지: 잘리지 않게 원래 비율로 */
+.gallery-modal__grid.is-long { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); align-items: start; gap: 18px; }
+.gallery-modal__grid.is-long:has(> figure:only-child) { grid-template-columns: minmax(0, 560px); justify-content: center; }
+.gallery-modal__grid.is-long .frame img { aspect-ratio: auto; object-fit: contain; height: auto; }
+@media (max-width: 760px) { .gallery-modal__grid.is-long { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .gallery-modal__grid.is-long:has(> figure:only-child) { grid-template-columns: 1fr; } }
+/* 확대 보기: 긴 이미지는 위아래로 스크롤, 배너는 잘리지 않게 */
+.lb__frame.is-scroll { width: min(760px, calc(100vw - 160px)); height: calc(100vh - 140px); aspect-ratio: auto; overflow-y: auto; overscroll-behavior: contain; }
+.lb__frame.is-scroll .lb__img { height: auto; object-fit: initial; scale: none; }
+.lb__frame.is-fit .lb__img { object-fit: contain; scale: none; }
+@media (max-width: 760px) { .lb__frame.is-scroll { width: calc(100vw - 24px); height: calc(100vh - 180px); } }

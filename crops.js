@@ -1,6 +1,10 @@
 // 이미지별 확대·위치 설정 (편집 모드: index.html?edit=1 에서 이미지를 클릭해 조정 후 "설정 파일 받기")
 // s = 확대 배율(1 = 원본 전체), x / y = 보여줄 위치(%, 0 = 왼쪽·위, 100 = 오른쪽·아래)
 window.IMAGE_CROPS = {
+  "assets/manucurist__web__dt_01.jpg": {"s":1,"x":50,"y":0},
+  "assets/evne__web__wash_dt.jpg": {"s":1,"x":50,"y":0},
+  "assets/evne__web__tissue_dt.jpg": {"s":1,"x":50,"y":0},
+  "assets/kindoh__web__fm_event.jpg": {"s":1,"x":50,"y":0},
   "assets/chanb__cleanser.jpg": {"s":1.05,"x":0,"y":13.7},
   "assets/chanb__duo.jpg": {"s":1.17,"x":27.8,"y":69.8},
   "assets/chanb__lotion.jpg": {"s":1.18,"x":0,"y":77.9},
